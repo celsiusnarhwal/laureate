@@ -1,7 +1,6 @@
 # laureate
 
-laureate generates [Homebrew](https://brew.sh) formulae for Python projects that use [Poetry](https://python-poetry.org)
-.
+laureate generates [Homebrew](https://brew.sh) formulae for Python projects that use [Poetry](https://python-poetry.org).
 
 ## Installation
 

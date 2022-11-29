@@ -6,7 +6,6 @@ authors = ["celsius narhwal <hello@celsiusnarhwal.dev>"]
 readme = "README.md"
 homepage = "https://github.com/celsiusnarhwal/laureate"
 repository = "https://github.com/celsiusnarhwal/laureate"
-include = ["README.md", "ACKNOWLEDGEMENTS.md"]
 
 [tool.poetry.dependencies]
 python = "^3.10"

@@ -2,7 +2,7 @@ from textwrap import dedent
 
 from jinja2 import Environment, BaseLoader
 
-from util import dash_to_studly
+from .util import dash_to_studly
 
 
 env = Environment(loader=BaseLoader, trim_blocks=True)

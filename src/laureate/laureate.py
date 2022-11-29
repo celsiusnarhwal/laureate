@@ -40,7 +40,8 @@ def main(output: Path, groups: set):
                 pkg = {
                     "name": dependency["name"],
                     "url": get_package_info(dependency["name"], dependency["version"])["urls"][0]["url"],
-                    "checksum": get_package_info(dependency["name"], dependency["version"])["urls"][0]["digests"]["sha256"]
+                    "checksum": get_package_info(dependency["name"], dependency["version"])["urls"][0]["digests"][
+                        "sha256"]
                 }
 
                 dependencies.append(pkg)
@@ -55,7 +56,7 @@ def main(output: Path, groups: set):
               help="The directory to save the formula to. Defaults to the current directory.")
 @click.option("-i", "--include", "include", multiple=True, help="A group to include.")
 @click.option("-e", "--exclude", "exclude", multiple=True, help="A group to exclude.")
-@click.option("-v", "--version", "version", help="See laureate's version.")
+@click.option("-v", "--version", "version", is_flag=True, help="See laureate's version.")
 @click.option("--license", "show_license", is_flag=True, help="See laureate's license.")
 def cli(output: str = None, include: tuple = None, exclude: tuple = None, version: bool = False,
         show_license: bool = False):
@@ -65,7 +66,7 @@ def cli(output: str = None, include: tuple = None, exclude: tuple = None, versio
     if version:
         print(toml.load("pyproject.toml")["tool"]["poetry"]["version"])
     elif show_license:
-        (Path(__file__).parent / "LICENSE.md").read_text()
+        print((Path(__file__).parent / "LICENSE.md").read_text())
     else:
         output = Path(output) if output else Path.cwd()
 

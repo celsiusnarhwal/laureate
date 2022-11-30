@@ -21,7 +21,9 @@ jobs:
         run: curl -sSL https://install.python-poetry.org | python -
 
       - name: Install Dependencies
-        run: poetry install
+        run: |
+          poetry install
+          poetry lock
 
       - name: Publish to PyPI
         run: |

@@ -75,7 +75,7 @@ def main(output: Path, groups: set, wheel: bool):
 def cli(output: str = None, include: tuple = None, exclude: tuple = None, wheel: bool =False,
         show_license: bool = False):
     """
-    Generate a Homebrew formula for a Poetry project"
+    Generate a Homebrew formula for a Poetry project
     """
     if show_license:
         print((Path(__file__).parent / "LICENSE.md").read_text())

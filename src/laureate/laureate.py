@@ -16,7 +16,7 @@ def get_package_info(package: str, version: str):
         raise Exception(f"Laureate couldn't get package info for {package} {version}.")
 
 
-def main(output: Path, groups: set):
+def main(output: Path, groups: set, wheel: bool):
     with Path.cwd():
         pyproject = toml.load("pyproject.toml")
         lockfile = toml.load("poetry.lock")
@@ -32,17 +32,31 @@ def main(output: Path, groups: set):
         }
 
         root_pkg_info = get_package_info(root_pkg["name"], root_pkg["version"])
-        root_pkg["url"] = root_pkg_info["urls"][0]["url"]
-        root_pkg["checksum"] = root_pkg_info["urls"][0]["digests"]["sha256"]
+
+        if wheel:
+            dist_info = next(filter(lambda x: x["packagetype"] == "bdist_wheel", root_pkg_info["urls"]))
+        else:
+            dist_info = next(filter(lambda x: x["packagetype"] == "sdist", root_pkg_info["urls"]))
+
+        root_pkg["url"] = dist_info["url"]
+        root_pkg["checksum"] = dist_info["digests"]["sha256"]
 
         for dependency in lockfile["package"]:
             if dependency["category"] in groups:
                 pkg = {
                     "name": dependency["name"],
-                    "url": get_package_info(dependency["name"], dependency["version"])["urls"][0]["url"],
-                    "checksum": get_package_info(dependency["name"], dependency["version"])["urls"][0]["digests"][
-                        "sha256"]
                 }
+
+                pkg_info = get_package_info(pkg["name"], dependency["version"])
+
+                if wheel:
+                    dist_info = next(filter(lambda url: url["packagetype"] == "bdist_wheel", pkg_info["urls"]))
+                else:
+                    dist_info = next(filter(lambda url: url["packagetype"] == "sdist", pkg_info["urls"]))
+
+                pkg["url"] = dist_info["url"]
+                pkg["checksum"] = dist_info["digests"]["sha256"]
+
 
                 dependencies.append(pkg)
 
@@ -56,16 +70,14 @@ def main(output: Path, groups: set):
               help="The directory to save the formula to. Defaults to the current directory.")
 @click.option("-i", "--include", "include", multiple=True, help="A group to include.")
 @click.option("-e", "--exclude", "exclude", multiple=True, help="A group to exclude.")
-@click.option("-v", "--version", "version", is_flag=True, help="See laureate's version.")
+@click.option("-w", "--wheel", "wheel", is_flag=True, help="Use wheels instead of sdists.")
 @click.option("--license", "show_license", is_flag=True, help="See laureate's license.")
-def cli(output: str = None, include: tuple = None, exclude: tuple = None, version: bool = False,
+def cli(output: str = None, include: tuple = None, exclude: tuple = None, wheel: bool =False,
         show_license: bool = False):
     """
-    Generate a Homebrew formula for a Poetry project.
+    Generate a Homebrew formula for a Poetry project"
     """
-    if version:
-        print(toml.load("pyproject.toml")["tool"]["poetry"]["version"])
-    elif show_license:
+    if show_license:
         print((Path(__file__).parent / "LICENSE.md").read_text())
     else:
         output = Path(output) if output else Path.cwd()
@@ -74,7 +86,7 @@ def cli(output: str = None, include: tuple = None, exclude: tuple = None, versio
         exclude = set(exclude) if exclude else set()
         include.add("main")
 
-        main(output, include.difference(exclude))
+        main(output, include.difference(exclude), wheel)
 
 
 if __name__ == '__main__':

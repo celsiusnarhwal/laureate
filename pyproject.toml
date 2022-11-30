@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "laureate"
-version = "1.0.1"
+version = "2.0.0"
 description = "Generate Homebrew formulae for Poetry projects"
 authors = ["celsius narhwal <hello@celsiusnarhwal.dev>"]
 readme = "README.md"

@@ -30,16 +30,19 @@ laureate can only generate formulae for packages that meet the following criteri
 ## Usage
 
 ```
-Usage: laureate.py [OPTIONS]
+Usage: laureate [OPTIONS]
 
-  Generate a Homebrew formula for a Poetry project.
+  Generate a Homebrew formula for a Poetry project
 
 Options:
-  -o, --output DIRECTORY  The directory to save the formula to. Defaults to the current directory.
+  -o, --output DIRECTORY  The directory to save the formula to. Defaults to
+                          the current directory.
   -i, --include TEXT      A group to include.
   -e, --exclude TEXT      A group to exclude.
-  --license               See Laureate's license.
+  -w, --wheel             Use wheels instead of sdists.
+  --license               See laureate's license.
   --help                  Show this message and exit.
+
 ```
 
 The simplest usage is just:

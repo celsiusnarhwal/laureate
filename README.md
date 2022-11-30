@@ -1,5 +1,13 @@
 # laureate
 
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/laureate?logo=python&logoColor=white&style=for-the-badge)](https://pypi.org/project/laureate)
+[![PyPI](https://img.shields.io/pypi/v/laureate?logo=pypi&logoColor=white&style=for-the-badge)](https://pypi.org/project/laureate)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/celsiusnarhwal/laureate?color=orange&label=latest%20release&logo=github&logoColor=white&style=for-the-badge)](https://github.com/celsiusnarhwal/laureate)
+[![PyPI - License](https://img.shields.io/pypi/l/laureate?color=03cb98&style=for-the-badge)](https://github.com/celsiusnarhwal/laureate/blob/HEAD/LICENSE.md)
+
+
+
+
 laureate generates [Homebrew](https://brew.sh) formulae for Python projects that use [Poetry](https://python-poetry.org).
 
 ## Installation
